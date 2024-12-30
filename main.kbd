@@ -1,0 +1,173 @@
+;;Раскладка клавиатуры
+(defsrc
+(include "keys.kbd")
+)
+
+;;Установка алиасов
+(defalias
+(include "alias.kbd")
+)
+
+;;Конфиг
+(defcfg
+(include "cfg.kbd")
+)
+
+
+
+(deflayermap default
+	esc grv
+	f1 1
+	f2 2
+	f3 3
+	f4 4
+	f5 5
+	f6 6
+	f7 7
+	f8 8
+	f9 9
+	f10 0
+	f11 -
+	f12 =
+	del bspc
+	grv tab
+	1 q 
+	2 w 
+	3 e 
+	4 r
+	5 t 
+	6 y 
+	7 u
+	8 i
+	9 o 
+	0 p
+	- [
+	= ]
+	tab lctrl
+	q a
+	w s
+	e d
+	r f
+	t g
+	y h
+	u j
+	i k
+	o l
+	p ;
+	[ '
+	] \
+	caps lsft
+	a z
+	s x
+	d c
+	f v
+	g b
+	h n
+    j m
+	k ,
+	l .
+	; /
+	' rsft
+	lsft lctl
+	z lalt
+	x lmet
+	c lctl
+	v lalt
+	b ralt
+	n rctl
+	$mainkey$ (tap-dance 200 (
+	  ;;$winkey$
+	  (layer-switch twoTap)
+	  lrld
+	  (layer-switch disable)
+	))
+
+	$winkey$ (tap-dance 200 (
+		$winkey$
+		(layer-switch meta-keys)
+	))
+
+	ralt (tap-hold 100 200 ralt (layer-while-held functions))
+)
+
+
+(deflayermap functions 
+	esc esc
+	f1 f1
+	f2 f2
+	f3 f3
+	f4 f4
+	f5 f5
+	f6 f6
+	f7 f7
+	f8 f8
+	f9 f9
+	f10 f10
+	f11 f11
+	f12 f12
+)
+
+
+;;стандартный слой
+#|(deflayermap default
+	caps (tap-hold 100 200 lctl lctl)
+
+	$mainkey$ (tap-dance 200 (
+	  ;;$winkey$
+	  (layer-switch twoTap)
+	  lrld
+	  (layer-switch disable)
+	))
+
+	$winkey$ (tap-dance 200 (
+		$winkey$
+		(layer-switch meta-keys)
+	))
+
+)|#
+
+;;Слой без именений со стандартными параметрами
+(deflayermap disable
+
+	$mainkey$ (tap-dance 200 (
+	  $mainkey$
+	  (macro $mainkey$ $mainkey$)
+	  (layer-switch default)
+	))
+
+)
+
+;;Слой для второго клика после меню
+(deflayermap twoTap
+
+	esc (layer-switch default)
+
+	t (multi (cmd ayugram) (layer-switch default))
+;; Выключаем все кнопки кроме указанных
+	(disable_all_keys esc t)
+)
+
+;;Слой для доп функций на клавише meta
+(deflayermap meta-keys
+	esc (layer-switch default)
+	a (movemouse-accel-left 15 700 1 15)
+	s (movemouse-accel-up 15 700 1 15)
+	d (movemouse-accel-down 15 700 1 15)
+	f (movemouse-accel-right 15 700 1 15)
+	h (mwheel-left 2 2)
+	j (mwheel-down 2 2)
+	k (mwheel-up 2 2)
+	l (mwheel-right 2 2)
+	i mlft
+	o mrgt
+	p mmid
+
+
+
+
+
+;; Выключаем все остальные кнопки
+	(disable_all_keys esc a s d f h j k l i o p)
+
+)
+

@@ -1,0 +1,308 @@
+;;Раскладка клавиатуры
+(defsrc
+  esc f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11 f12 del
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt menu rctl
+
+)
+
+;;Установка алиасов
+(defalias
+disable (multi ())
+
+)
+
+;;Конфиг
+(defcfg
+danger-enable-cmd yes
+)
+
+
+
+(deflayermap default
+	esc grv
+	f1 1
+	f2 2
+	f3 3
+	f4 4
+	f5 5
+	f6 6
+	f7 7
+	f8 8
+	f9 9
+	f10 0
+	f11 -
+	f12 =
+	del bspc
+	grv tab
+	1 q 
+	2 w 
+	3 e 
+	4 r
+	5 t 
+	6 y 
+	7 u
+	8 i
+	9 o 
+	0 p
+	- [
+	= ]
+	tab lctrl
+	q a
+	w s
+	e d
+	r f
+	t g
+	y h
+	u j
+	i k
+	o l
+	p ;
+	[ '
+	] \
+	caps lsft
+	a z
+	s x
+	d c
+	f v
+	g b
+	h n
+    j m
+	k ,
+	l .
+	; /
+	' rsft
+	lsft lctl
+	z lalt
+	x lmet
+	c lctl
+	v lalt
+	b ralt
+	n rctl
+	menu (tap-dance 200 (
+	  ;;lmet
+	  (layer-switch twoTap)
+	  lrld
+	  (layer-switch disable)
+	))
+
+	lmet (tap-dance 200 (
+		lmet
+		(layer-switch meta-keys)
+	))
+
+	ralt (tap-hold 100 200 ralt (layer-while-held functions))
+)
+
+
+(deflayermap functions 
+	esc esc
+	f1 f1
+	f2 f2
+	f3 f3
+	f4 f4
+	f5 f5
+	f6 f6
+	f7 f7
+	f8 f8
+	f9 f9
+	f10 f10
+	f11 f11
+	f12 f12
+)
+
+
+;;стандартный слой
+#|(deflayermap default
+	caps (tap-hold 100 200 lctl lctl)
+
+	menu (tap-dance 200 (
+	  ;;lmet
+	  (layer-switch twoTap)
+	  lrld
+	  (layer-switch disable)
+	))
+
+	lmet (tap-dance 200 (
+		lmet
+		(layer-switch meta-keys)
+	))
+
+)|#
+
+;;Слой без именений со стандартными параметрами
+(deflayermap disable
+
+	menu (tap-dance 200 (
+	  menu
+	  (macro menu menu)
+	  (layer-switch default)
+	))
+
+)
+
+;;Слой для второго клика после меню
+(deflayermap twoTap
+
+	esc (layer-switch default)
+
+	t (multi (cmd ayugram) (layer-switch default))
+;; Выключаем все кнопки кроме указанных
+	f1 @disable
+f2 @disable
+f3 @disable
+f4 @disable
+f5 @disable
+f6 @disable
+f7 @disable
+f8 @disable
+f9 @disable
+f10 @disable
+f11 @disable
+f12 @disable
+del @disable
+grv @disable
+1 @disable
+2 @disable
+3 @disable
+4 @disable
+5 @disable
+6 @disable
+7 @disable
+8 @disable
+9 @disable
+- @disable
+= @disable
+bspc @disable
+tab @disable
+q @disable
+w @disable
+e @disable
+r @disable
+y @disable
+u @disable
+i @disable
+o @disable
+p @disable
+[ @disable
+] @disable
+\ @disable
+caps @disable
+a @disable
+s @disable
+d @disable
+f @disable
+g @disable
+h @disable
+j @disable
+k @disable
+l @disable
+; @disable
+' @disable
+ret @disable
+lsft @disable
+z @disable
+x @disable
+c @disable
+v @disable
+b @disable
+n @disable
+m @disable
+. @disable
+/ @disable
+rsft @disable
+lctl @disable
+lmet @disable
+lalt @disable
+spc @disable
+ralt @disable
+menu @disable
+rctl @disable
+)
+
+;;Слой для доп функций на клавише meta
+(deflayermap meta-keys
+	esc (layer-switch default)
+	a (movemouse-accel-left 15 700 1 15)
+	s (movemouse-accel-up 15 700 1 15)
+	d (movemouse-accel-down 15 700 1 15)
+	f (movemouse-accel-right 15 700 1 15)
+	h (mwheel-left 2 2)
+	j (mwheel-down 2 2)
+	k (mwheel-up 2 2)
+	l (mwheel-right 2 2)
+	i mlft
+	o mrgt
+	p mmid
+
+
+
+
+
+;; Выключаем все остальные кнопки
+	f1 @disable
+f2 @disable
+f3 @disable
+f4 @disable
+f5 @disable
+f6 @disable
+f7 @disable
+f8 @disable
+f9 @disable
+f10 @disable
+f11 @disable
+f12 @disable
+del @disable
+grv @disable
+1 @disable
+2 @disable
+3 @disable
+4 @disable
+5 @disable
+6 @disable
+7 @disable
+8 @disable
+9 @disable
+- @disable
+= @disable
+bspc @disable
+tab @disable
+q @disable
+w @disable
+e @disable
+r @disable
+t @disable
+y @disable
+u @disable
+[ @disable
+] @disable
+\ @disable
+caps @disable
+g @disable
+; @disable
+' @disable
+ret @disable
+lsft @disable
+z @disable
+x @disable
+c @disable
+v @disable
+b @disable
+n @disable
+m @disable
+. @disable
+/ @disable
+rsft @disable
+lctl @disable
+lmet @disable
+lalt @disable
+spc @disable
+ralt @disable
+menu @disable
+rctl @disable
+
+)
+
